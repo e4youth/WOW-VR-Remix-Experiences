@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Akins High School</title>
+    <meta name="project" content="Akins High School" />
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+
+    <style>
+      .video-controls {
+        position: absolute;
+        width: 75px;
+        height: 20px;
+        cursor: pointer;
+        background-color: #fff;
+        z-index: 10;
+      }
+
+      #play-btn {
+        left: 5px;
+      }
+
+      #pause-btn {
+        left: 5px;
+      }
+
+      #mute-btn {
+        left: 85px;
+      }
+
+      #unmute-btn {
+        left: 85px;
+      }
+
+      #stop-btn {
+        left: 170px;
+      }
+
+      #replay-btn {
+        left: 170px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="play-btn" class="video-controls">PLAY</div>
+    <div id="pause-btn" class="video-controls" style="visibility: hidden">
+      PAUSE
+    </div>
+    <div id="mute-btn" class="video-controls">MUTE</div>
+    <div id="unmute-btn" class="video-controls style=visibility:hidden">
+      UNMUTE
+    </div>
+    <div id="stop-btn" class="video-controls" style="visibility: hidden">
+      STOP
+    </div>
+    <div id="replay-btn" class="video-controls">REPLAY</div>
+    <a-scene>
+      <a-assets>
+        <!--To remix the image, replace the URL in between the quotes after src="paste-the-URLof-your-image-here" -->
+        <img
+          id="scene_01"
+          crossorigin="anonymous"
+          src="https://cdn.glitch.global/78c198b3-8042-4d5d-95ba-cb3530fdc41f/Street%20View%20360.jpg?v=1711482736319"
+        />
+        <!--To remix the audio, replace the sURL in between the quotes after src="paste-the-URLof-your-audio-here" -->
+        <video
+          id="videoasset"
+          autoplay
+          loop="true"
+          src="https://cdn.glitch.me/78c198b3-8042-4d5d-95ba-cb3530fdc41f/akins_sigplace.mp4?v=1711482748374"
+          controls
+          crossorigin="anonymous"
+        ></video>
+      </a-assets>
+      <!-- Using the asset management system. -->
+      <a-video
+        id="avideo"
+        src="#videoasset"
+        width="32"
+        height="18"
+        position="0 0 -20"
+      ></a-video>
+
+      <a-sky src="#scene_01"> </a-sky>
+      <!--To remix the title, replace the text in between the quotes after value="Vacation Remix Party - Name of Your Vacation Spot" -->
+      <a-text
+        font="kelsonsans"
+        value="Akins High School"
+        width="5"
+        position="-1.25 .7 -1.25"
+        rotation="-2 0 0"
+      ></a-text>
+    </a-scene>
+    <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        var scene = document.querySelector("a-scene");
+        var video = document.getElementById("avideo");
+        var vid = document.getElementById("videoasset");
+
+        var playBtn = document.getElementById("play-btn");
+        var pauseBtn = document.getElementById("pause-btn");
+        var muteBtn = document.getElementById("mute-btn");
+        var unmuteBtn = document.getElementById("unmute-btn");
+        var stopBtn = document.getElementById("stop-btn");
+        var replayBtn = document.getElementById("replay-btn");
+
+        playBtn.addEventListener("click", pausePlayHandler, false);
+        pauseBtn.addEventListener("click", pausePlayHandler, false);
+        muteBtn.addEventListener("click", muteUnmuteHandler, false);
+        unmuteBtn.addEventListener("click", muteUnmuteHandler, false);
+        stopBtn.addEventListener("click", stopHandler, false);
+        replayBtn.addEventListener("click", replayHandler, false);
+
+        function pausePlayHandler(e) {
+          if (vid.paused) {
+            vid.play();
+            pauseBtn.style.visibility = "visible";
+            playBtn.style.visibility = "hidden";
+          } else {
+            vid.pause();
+            pauseBtn.style.visibility = "hidden";
+            playBtn.style.visibility = "visible";
+          }
+        }
+
+        function muteUnmuteHandler(e) {
+          if (vid.volume == 0.0) {
+            vid.volume = 1.0;
+            muteBtn.style.visibility = "visible";
+            unmuteBtn.style.visibility = "hidden";
+          } else {
+            vid.volume = 0.0;
+            muteBtn.style.visibility = "hidden";
+            unmuteBtn.style.visibility = "visible";
+          }
+        }
+
+        function stopHandler(e) {
+          vid.currentTime = 0;
+          vid.pause();
+        }
+
+        function replayHandler(e) {
+          vid.currentTime = 0;
+          vid.play();
+        }
+      });
+    </script>
+  </body>
+</html>
